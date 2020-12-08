@@ -5,12 +5,7 @@ import proyectoContext from "../../context/Proyectos/ProyectoContext";
 const ListadoTareas = () => {
   const proyectosContext = useContext(proyectoContext);
   const { proyecto, eliminarProyecto } = proyectosContext;
-  const tareasProyecto = [
-    { nombre: "Elegir plataforma", estado: true },
-    { nombre: "Elegir Hosting", estado: false },
-    { nombre: "Elegir colores", estado: true },
-    { nombre: "Elegir plataformas de pago", estado: false },
-  ];
+  const tareasProyecto = [];
   if (proyecto === null) return <h2>Selecciona un proyecto</h2>;
   const onEliminar = () => {
     eliminarProyecto(proyectoActual.id);
