@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import NuevaCuenta from "./NuevaCuenta";
+
 const Login = () => {
   const [usuario, guardarUsuario] = useState({
     email: "",

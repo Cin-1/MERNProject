@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./components/auth/Login";
 import NuevaCuenta from "./components/auth/NuevaCuenta";
-import Proyecto from "./components/proyects/Proyecto";
 import Proyectos from "./components/proyects/Proyectos";
 import ProyectoState from "./context/Proyectos/ProyectoState";
 import TareaState from "./context/tasks/TareaState";
