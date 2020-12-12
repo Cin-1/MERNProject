@@ -1,7 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import AlertaContext from "../../context/alertas/alertaContext";
+import AuthContext from "../../context/auth/authContext";
 
-const NuevaCuenta = () => {
+const NuevaCuenta = (props) => {
+  const alertaContext = useContext(AlertaContext);
+  const { alerta, mostrarAlerta } = alertaContext;
+
+  const authContext = useContext(AuthContext);
+  const { registrarUsuario, autenticado, mensaje } = authContext;
+
+  useEffect(() => {
+    if (autenticado) {
+      props.history.push("/proyectos");
+    }
+    if (mensaje) {
+      mostrarAlerta(mensaje.msg, mensaje.categoria);
+    }
+  }, [mensaje, autenticado, props.history]);
+
   const [usuario, guardarUsuario] = useState({
     nombre: "",
     email: "",
@@ -17,13 +34,37 @@ const NuevaCuenta = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
+    if (
+      nombre.trim() === "" ||
+      password.trim() === "" ||
+      email.trim() === "" ||
+      password1.trim() === ""
+    ) {
+      mostrarAlerta("Todos los campos son obligatorios", "alerta-error");
+      return;
+    }
+    if (password.length < 6) {
+      mostrarAlerta(
+        "El password debe tener al menos 6 caracteres",
+        "alerta-error"
+      );
+      return;
+    }
+    if (password1 !== password) {
+      mostrarAlerta("Las contraseñas no coinciden", "alerta-error");
+      return;
+    }
+    registrarUsuario({ nombre, email, password });
   };
 
   return (
     <div className="form-usuario">
+      {alerta ? (
+        <div className={`alerta ${alerta.categoria}`}>{alerta.msg}</div>
+      ) : null}
       <div className="contenedor-form sombra-dark">
         <h1>Registro</h1>
-        <form>
+        <form onSubmit={onSubmit}>
           <div className="campo-form">
             <label htmlFor="nombre">Nombre</label>
             <input
@@ -73,7 +114,6 @@ const NuevaCuenta = () => {
               type="submit"
               className="btn btn-primario btn-block"
               value="Iniciar Sesión"
-              onSubmit={onSubmit}
             />
           </div>
         </form>
