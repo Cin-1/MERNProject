@@ -11,7 +11,7 @@ const ListadoTareas = () => {
   const { tareasproyecto } = tareasContext;
   if (proyecto === null) return <h2>Selecciona un proyecto</h2>;
   const onEliminar = () => {
-    eliminarProyecto(proyectoActual.id);
+    eliminarProyecto(proyectoActual._id);
   };
   const [proyectoActual] = proyecto;
   return (

@@ -1,19 +1,31 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import AuthContext from "../../context/auth/authContext";
 
 const Barra = () => {
+  const authContext = useContext(AuthContext);
+  const { usuarioAuth, usuario, cerrarSesion } = authContext;
+
+  useEffect(() => {
+    usuarioAuth();
+  }, []);
   const handleClick = () => {
-    localStorage.removeItem("token");
+    cerrarSesion();
   };
   return (
     <header className="app-header">
-      <p className="nombre-usuario">
-        Hola <span>Cinthia!</span>
-      </p>
+      {usuario ? (
+        <p className="nombre-usuario">
+          Hola <span>{usuario.nombre}</span>
+        </p>
+      ) : null}
+
       <nav className="nav-principal">
-        <Link to="/" onClick={handleClick}>
+        <button
+          className="btn btn-blank cerrar-sesion btn-primario "
+          onClick={handleClick}
+        >
           Cerrar Sesión
-        </Link>
+        </button>
       </nav>
     </header>
   );

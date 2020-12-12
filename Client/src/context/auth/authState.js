@@ -19,6 +19,7 @@ const AuthState = (props) => {
     autenticado: null,
     usuario: null,
     mensaje: null,
+    cargando: true,
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
   const registrarUsuario = async (datos) => {
@@ -42,13 +43,30 @@ const AuthState = (props) => {
     }
     try {
       const rta = await clienteAxios.get("/api/auth");
-      console.log(rta.data);
-      dispatch({ type: OBTENER_USUARIO, payload: rta.data });
+      dispatch({ type: OBTENER_USUARIO, payload: rta.data.usuario });
     } catch (error) {
       console.log(error.response);
       dispatch({ type: LOGIN_ERROR });
     }
   };
+  const iniciarSesion = async (datos) => {
+    try {
+      const rta = await clienteAxios.post("/api/auth", datos);
+      dispatch({ type: LOGIN_EXITOSO, payload: rta.data });
+      usuarioAuth();
+    } catch (error) {
+      console.log(error.response.data.msg);
+      const alerta = {
+        msg: error.response.data.msg,
+        categoria: "alerta-error",
+      };
+      dispatch({ type: LOGIN_ERROR, payload: alerta });
+    }
+  };
+  const cerrarSesion = async () => {
+    dispatch({ type: CERRAR_SESION });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -56,7 +74,11 @@ const AuthState = (props) => {
         autenticado: state.autenticado,
         usuario: state.usuario,
         mensaje: state.mensaje,
+        cargando: state.cargando,
         registrarUsuario,
+        iniciarSesion,
+        usuarioAuth,
+        cerrarSesion,
       }}
     >
       {props.children}

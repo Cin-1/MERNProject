@@ -23,7 +23,7 @@ exports.obtenerProyectos = async (req, res) => {
     const proyectos = await Proyecto.find({ creador: req.usuario.id }).sort({
       creado: -1,
     });
-    res.json({ proyectos });
+    return res.json({ proyectos });
   } catch (error) {
     console.log(error);
     res.status(500).send("Hubo un error en el servidor");
