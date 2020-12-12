@@ -4,12 +4,14 @@ import Sidebar from "../layout/Sidebar";
 import FormTarea from "../tasks/FormTarea";
 import ListadoTareas from "../tasks/ListadoTareas";
 import AuthContext from "../../context/auth/authContext";
+
 const Proyectos = () => {
   const authContext = useContext(AuthContext);
   const { usuarioAuth } = authContext;
 
   useEffect(() => {
     usuarioAuth();
+    // eslint-disable-next-line
   }, []);
   return (
     <div className="contenedor-app">

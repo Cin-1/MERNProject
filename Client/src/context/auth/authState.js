@@ -38,6 +38,7 @@ const AuthState = (props) => {
 
   const usuarioAuth = async () => {
     const token = localStorage.getItem("token");
+    console.log("state", token);
     if (token) {
       authToken(token);
     }

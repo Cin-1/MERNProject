@@ -11,7 +11,6 @@ import tokenAuth from "./config/token";
 import RutaPrivada from "./components/rutas/RutaPrivada";
 
 const token = localStorage.getItem("token");
-console.log(token);
 if (token) {
   tokenAuth();
 }

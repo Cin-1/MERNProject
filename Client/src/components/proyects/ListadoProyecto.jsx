@@ -6,7 +6,7 @@ import AlertaContext from "../../context/alertas/alertaContext";
 
 const ListadoProyectos = () => {
   const alertaContext = useContext(AlertaContext);
-  const { alerta, mostrarAlerta } = alertaContext;
+  const { mostrarAlerta } = alertaContext;
 
   const proyectosContext = useContext(proyectoContext);
   const { proyectos, obtenerProyectos, mensaje } = proyectosContext;
@@ -15,15 +15,18 @@ const ListadoProyectos = () => {
       mostrarAlerta(mensaje.msg, mensaje.categoria);
     }
     obtenerProyectos();
+    // eslint-disable-next-line
   }, [mensaje]);
 
   if (proyectos.length === 0)
     return <p>No hay proyectos, comienza creando uno</p>;
   return (
     <ul className="listado-proyectos">
-      {alerta ? (
-        <div className={`alerta ${alerta.categoria}`}>{alerta.msg}</div>
-      ) : null}
+      {
+        // {alerta ? (
+        //   <div className={`alerta ${alerta.categoria}`}>{alerta.msg}</div>
+        // ) : null}
+      }
 
       <TransitionGroup>
         {proyectos.map((proyecto) => (

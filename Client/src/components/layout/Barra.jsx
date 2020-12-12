@@ -7,6 +7,7 @@ const Barra = () => {
 
   useEffect(() => {
     usuarioAuth();
+    // eslint-disable-next-line
   }, []);
   const handleClick = () => {
     cerrarSesion();
